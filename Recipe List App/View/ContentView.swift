@@ -13,25 +13,39 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView{
-            List(model.recipes) { r in
+            
+            VStack(alignment: .leading){
+                Text("All Recipes")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.top, 40.0)
                 
-                NavigationLink {
-                    RecipeDetialView(recipe: r)
-                } label: {
-                    HStack(alignment: .center, spacing: 20.0){
-                        Image(r.image)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 50, height: 50, alignment: .center)
-                            .clipped()
-                            .cornerRadius(5)
-                        Text(r.name)
-                            .font(.body)
-                            .fontWeight(.semibold)
-                            .multilineTextAlignment(.leading)
+                ScrollView {
+                    LazyVStack(alignment: .leading) {
+                        ForEach(model.recipes) { r in
+                            NavigationLink {
+                                RecipeDetialView(recipe: r)
+                            } label: {
+                                HStack(alignment: .center, spacing: 20.0){
+                                    Image(r.image)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 50, height: 50, alignment: .center)
+                                        .clipped()
+                                        .cornerRadius(5)
+                                    Text(r.name)
+                                        .foregroundColor(.black)
+                                }
+                            }
+                        }
                     }
+                    
                 }
-            }.navigationTitle("All Recipes")
+                
+            }
+            .navigationBarHidden(true)
+            .padding(.leading)
+            
         }
         
     }
@@ -41,5 +55,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         
         ContentView()
+            .environmentObject(RecipeModel())
     }
 }

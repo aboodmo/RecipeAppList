@@ -16,7 +16,7 @@ struct FeaturedView: View {
             
             Text("Featured Recipes")
                 .font(.largeTitle)
-                .fontWeight(.semibold)
+                .bold()
                 .padding(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                 .padding(.top, 40.0)
                 
