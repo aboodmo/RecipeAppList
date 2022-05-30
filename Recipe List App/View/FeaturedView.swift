@@ -12,12 +12,72 @@ struct FeaturedView: View {
     @EnvironmentObject var model: RecipeModel
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading){
+            
+            Text("Featured Recipes")
+                .font(.largeTitle)
+                .fontWeight(.semibold)
+                .padding(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                .padding(.top, 40.0)
+                
+            
+            GeometryReader { geo in
+                TabView {
+                    
+                    ForEach (0..<model.recipes.count) { i in
+                        if model.recipes[i].featured {
+                            // Rectangle Card
+                            
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.white)
+                                VStack {
+                                    Image(model.recipes[i].image)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .clipped()
+                                    Text(model.recipes[i].name)
+                                        .fontWeight(.medium)
+                                        .padding(5)
+                                }
+                                
+                            }
+                            .frame(width: geo.size.width - 40, height: geo.size.height - 100, alignment: .center)
+                            .cornerRadius(15)
+                            .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.556), radius: 10, x: -5, y:5)
+                            
+                        }
+                        
+                    }
+                    
+                    
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                .indexViewStyle(.page(backgroundDisplayMode: .always))
+                
+            }.padding(.bottom, 10.0)
+            
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Preperation Time:")
+                    .font(.headline)
+                Text("1 hour")
+                    .padding(.leading)
+                Text("Highlights:")
+                    .font(.headline)
+                Text("Preperation Time")
+                    .padding(.leading)
+            }
+            .padding([.leading, .bottom])
+            
+        }
+        
+        
     }
 }
 
 struct FeaturedView_Previews: PreviewProvider {
     static var previews: some View {
         FeaturedView()
+            .environmentObject(RecipeModel())
     }
 }

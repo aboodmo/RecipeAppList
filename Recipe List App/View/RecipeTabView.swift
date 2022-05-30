@@ -11,6 +11,7 @@ struct RecipeTabView: View {
         
     var body: some View {
         TabView {
+            
             FeaturedView()
                 .tabItem {
                     VStack {
