@@ -10,6 +10,7 @@ import SwiftUI
 struct FeaturedView: View {
     
     @EnvironmentObject var model: RecipeModel
+    @State var isSelected = false
     
     var body: some View {
         VStack(alignment: .leading){
@@ -26,22 +27,30 @@ struct FeaturedView: View {
                     
                     ForEach (0..<model.recipes.count) { i in
                         if model.recipes[i].featured {
-                            // Rectangle Card
                             
-                            ZStack {
-                                Rectangle()
-                                    .foregroundColor(.white)
-                                VStack {
-                                    Image(model.recipes[i].image)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .clipped()
-                                    Text(model.recipes[i].name)
-                                        .fontWeight(.medium)
-                                        .padding(5)
+                            Button {
+                                self.isSelected = true
+                            } label: {
+                                // Rectangle Card
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.white)
+                                    VStack {
+                                        Image(model.recipes[i].image)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .clipped()
+                                        Text(model.recipes[i].name)
+                                            .fontWeight(.medium)
+                                            .padding(5)
+                                    }
+                                    
                                 }
-                                
                             }
+                            .sheet(isPresented: $isSelected, content: {
+                                RecipeDetialView(recipe: model.recipes[i])
+                            })
+                            .buttonStyle(.plain)
                             .frame(width: geo.size.width - 40, height: geo.size.height - 100, alignment: .center)
                             .cornerRadius(15)
                             .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.556), radius: 10, x: -5, y:5)

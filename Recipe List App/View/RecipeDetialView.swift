@@ -11,26 +11,53 @@ struct RecipeDetialView: View {
     
     var recipe: Recipe
     
+    @State var selectedServingSize = 2
+    
     var body: some View {
         
         ScrollView {
             
             VStack(alignment: .leading){
                 
-                // Image
+                // MARK: Image
                 Image(recipe.image)
                     .resizable()
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
                 
-                // Ingrediants
+                // MARK: Recipe Title
+                Text("All Recipes")
+                    .font(.title)
+                    .bold()
+                
+                // MARK: Picker
+                VStack(alignment: .leading){
+                    
+                    Text("Select your serving size:")
+                    
+                    Picker("", selection: $selectedServingSize) {
+                        
+                        Text("2").tag(2)
+                        Text("4").tag(4)
+                        Text("6").tag(6)
+                        Text("8").tag(8)
+                        
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(width: 160)
+                    
+                }
+                .padding()
+                
+                
+                // MARK: Ingrediants
                 VStack(alignment: .leading){
                     Text("Ingredients:")
                         .font(.headline)
                         .padding(.bottom, 5.0)
                     
                     ForEach (recipe.ingredients) { item in
-                        Text("• " + item.name)
+                        Text("• " + RecipeModel.getportion(ingredient: item, recipeServings: recipe.servings, TargetServingSize: selectedServingSize) + " " + item.name.lowercased())
                             .padding(.leading, 20.0)
                             .padding(.bottom, 1.0)
                             
@@ -39,9 +66,10 @@ struct RecipeDetialView: View {
                 }
                 .padding(.horizontal)
                 
+                // MARK: Divider
                 Divider().padding(.bottom)
                 
-                // Directions
+                // MARK: Directions
                 VStack(alignment: .leading){
                     Text("Directions:")
                         .font(.headline)
@@ -58,7 +86,7 @@ struct RecipeDetialView: View {
                 .padding(.horizontal)
                 
                 Divider().padding(.bottom)
-            }
+            }.navigationBarHidden(true)
             
             
                 
@@ -69,7 +97,7 @@ struct RecipeDetialView: View {
 //
 //            Text(recipe.prepTime)
             
-        }.navigationBarTitle(recipe.name)
+        }
     }
 }
 
