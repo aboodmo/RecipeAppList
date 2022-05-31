@@ -16,8 +16,7 @@ struct ContentView: View {
             
             VStack(alignment: .leading){
                 Text("All Recipes")
-                    .font(.largeTitle)
-                    .bold()
+                    .font(Font.custom("AvenirNext-DemiBold", size: 30))
                     .padding(.top, 40.0)
                 
                 ScrollView {
@@ -33,14 +32,53 @@ struct ContentView: View {
                                         .frame(width: 50, height: 50, alignment: .center)
                                         .clipped()
                                         .cornerRadius(5)
-                                    Text(r.name)
-                                        .foregroundColor(.black)
+                                    
+                                    VStack(alignment: .leading){
+                                        Text(r.name)
+                                            .font(Font.custom("AvenirNext-DemiBold", size: 16))
+                                            
+                                            
+                                            
+                                        RecipeHighlights(highlights: r.highlights)
+                                            
+                                            
+                                    }
+                                    .foregroundColor(.black)
+                                    
                                 }
                             }
                         }
                     }
                     
                 }
+                
+//                List(model.recipes) { r in
+//
+//                    NavigationLink {
+//                        RecipeDetialView(recipe: r)
+//                    } label: {
+//                        HStack(alignment: .center, spacing: 20.0){
+//                            Image(r.image)
+//                                .resizable()
+//                                .scaledToFill()
+//                                .frame(width: 50, height: 50, alignment: .center)
+//                                .clipped()
+//                                .cornerRadius(5)
+//
+//                            VStack(alignment: .leading){
+//                                Text(r.name)
+//                                    .font(Font.custom("AvenirNext-DemiBold", size: 16))
+//
+//
+//                                RecipeHighlights(highlights: r.highlights)
+//
+//
+//                            }
+//                            .foregroundColor(.black)
+//
+//                        }
+//                    }
+//                }
                 
             }
             .navigationBarHidden(true)

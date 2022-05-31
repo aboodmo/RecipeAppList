@@ -22,18 +22,22 @@ struct RecipeDetialView: View {
                 // MARK: Image
                 Image(recipe.image)
                     .resizable()
+                    .padding(.top, -50.0)
                     .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
                 
                 // MARK: Recipe Title
-                Text("All Recipes")
-                    .font(.title)
-                    .bold()
+                Text(recipe.name)
+                    .font(Font.custom("AvenirNext-DemiBold", size: 30))
+                    .padding(.bottom, -5.0)
+                    
+                    
                 
                 // MARK: Picker
                 VStack(alignment: .leading){
                     
                     Text("Select your serving size:")
+                        .font(Font.custom("AvenirNext", size: 15))
                     
                     Picker("", selection: $selectedServingSize) {
                         
@@ -53,13 +57,14 @@ struct RecipeDetialView: View {
                 // MARK: Ingrediants
                 VStack(alignment: .leading){
                     Text("Ingredients:")
-                        .font(.headline)
+                        .font(Font.custom("AvenirNext-DemiBold", size: 16))
                         .padding(.bottom, 5.0)
                     
                     ForEach (recipe.ingredients) { item in
                         Text("• " + RecipeModel.getportion(ingredient: item, recipeServings: recipe.servings, TargetServingSize: selectedServingSize) + " " + item.name.lowercased())
                             .padding(.leading, 20.0)
                             .padding(.bottom, 1.0)
+                            .font(Font.custom("AvenirNext", size: 15))
                             
                     }
                         
@@ -72,13 +77,14 @@ struct RecipeDetialView: View {
                 // MARK: Directions
                 VStack(alignment: .leading){
                     Text("Directions:")
-                        .font(.headline)
+                        .font(Font.custom("AvenirNext-DemiBold", size: 16))
                         .padding(.bottom, 5.0)
                     
                     ForEach (0..<recipe.directions.count, id: \.self) { i in
                         Text(String(i+1) + ".  \(recipe.directions[i])")
                             .padding(.leading, 20.0)
                             .padding(.bottom, 5.0)
+                            .font(Font.custom("AvenirNext", size: 15))
                             
                     }
                         
@@ -86,7 +92,7 @@ struct RecipeDetialView: View {
                 .padding(.horizontal)
                 
                 Divider().padding(.bottom)
-            }.navigationBarHidden(true)
+            }
             
             
                 
